@@ -1,0 +1,20 @@
+{
+  "name": "doorduino",
+  "version": "0.0.1",
+  "description": "Accessing Door via Angularjs and Heroku!",
+  "main": "web.js",
+  "dependencies": {
+    "node-static": "~0.6.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:doorduino.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "gitHead": "2fb0abff2f25283c90990f9bfb202e0a0dd0fb96"
+}
