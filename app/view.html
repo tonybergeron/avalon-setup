@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Demo : The jPlayerPlaylist Object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<!-- jPlayer Files-->
+<link href="css/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
+<link href="css/blue.monday/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="lib/jPlayer/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="lib/jPlayer/jplayer.playlist.min.js"></script>
+<!--<script type="text/javascript" src="js/jPlayer.js"></script>-->
+<script type="text/javascript" src="js/avalon.js"></script>
+
+</head>
+<body>
+	<div class="container">
+		<div id="roles">
+			<p>Choose the players you are playing with:</p>
+			<ul>
+				<li><input id="merlin" type="checkbox" disabled>Merlin</input></li>
+				<li><input id="mordred" type="checkbox">Mordred</input></li>
+				<li><input id="oberon" type="checkbox">Oberon</input></li>
+				<li><input id="percival" type="checkbox">Percival</input></li>
+				<li><input id="morgana" type="checkbox">Morgana</input></li>
+				<li><input id="lancelot" type="checkbox">Lancelot</input></li>
+			</ul>
+		</div>
+		
+		<!-- Player -->
+		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+
+		<div id="jp_container_1" class="jp-audio div-center">
+			<div class="jp-type-playlist">
+				<div class="jp-gui jp-interface">
+					<ul class="jp-controls">
+						<li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+						<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+						<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+						<li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+						<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+						<!--<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>-->
+						<!--<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>-->
+						<!--<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>-->
+					</ul>
+					<div class="jp-progress">
+						<div class="jp-seek-bar">
+							<div class="jp-play-bar"></div>
+						</div>
+					</div>
+					<!--
+					<div class="jp-volume-bar">
+						<div class="jp-volume-bar-value"></div>
+					</div>
+					-->
+					<div class="jp-time-holder">
+						<div class="jp-current-time"></div>
+						<div class="jp-duration"></div>
+					</div>
+					<!--
+					<ul class="jp-toggles">
+						<li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
+						<li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
+						<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+						<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+					</ul>
+					-->
+				</div>
+				<div class="jp-playlist">
+					<ul>
+						<li></li>
+					</ul>
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span>
+					To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+				</div>
+			</div>
+		</div>
+	
+	</div>
+		
+		<span id="playlist-setPlaylist-audio-mix">Add to Playlist</span>
+		<br>
+		<br>
+		<h1>Demo of Google Text-to-Speech API</h1>
+		<div id="tts_demo"></div>
+		<div id="error"></div>
+		<p><strong>Player: </strong><span id="tts_player"></span></p>
+		
+		<!--
+		<footer>
+			<p>Source: <a href="https://github.com/hiddentao/google-tts">https://github.com/hiddentao/google-tts</a></p>
+			<p>Developed by <a href="http://www.hiddentao.com/archives/2012/04/01/google-tts-a-javascript-api-for-google-text-to-speech-engine/">Ramesh Nair</a>, based on code by <a href="http://weston.ruter.net/projects/google-tts/">Weston Ruter</a>.</p>
+		</footer>
+		-->
+		
+		<div class="playL">Play Local</div>
+		<div class="pauseL">Stop Local</div>
+		
+		
+		
+		<script type="text/javascript" src="https://rawgithub.com/hiddentao/google-tts/master/google-tts.min.js"></script>
+		<script type="text/javascript" src="https://rawgithub.com/hiddentao/google-tts/master/soundmanager2.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			  soundManager.setup({
+				url: '/',
+				preferFlash: false,
+				onready: function() {
+				  if (!window.GoogleTTS) {
+					$("#error").text("Sorry, the google-tts script couldn't be loaded.");
+					return;
+				  } else {
+					var HTML = '\
+						<div> \
+						<label for="demo_language">Language:</label> \
+						<select id="demo_language"> \
+						<option value="" disabled="disabled">(Select language)</option> \
+						</select> \
+						</div> \
+						<div> \
+						<label for="demo_text">Text:</label> \
+						<textarea rows="5" cols="60" id="demo_text" /> \
+						</div> \
+						<button id="demo_play">Play!</button> \
+						';
+					$("#tts_demo").html(HTML);
+				  }
+
+				  var googleTTS = new window.GoogleTTS();
+
+				  // setup language options
+				  $.each(googleTTS.languages(), function(key, value) {
+					$('#demo_language').append('<option value="' + key + '">' + value + '</option>');
+				  });
+
+				  // play
+				  $("#demo_play").click(function() {
+					googleTTS.play($("#demo_text").val(), $("#demo_language").val(), function(err) {
+					  if (err) {
+						$("#error").text(err.toString());
+					  }
+
+					  console.log('Finished playing');
+					});
+				  });
+
+				  // defaults
+				  $("#demo_language").val('en');
+				  $("#demo_text").val('??');
+
+				  // char count
+				  $("#demo_text").keyup(function() {
+					var chars = $("#demo_text").val();
+					$("label[for=demo_text]").text("Text: (" + chars.length + "):");
+				  });
+
+				  // available player
+				  googleTTS.getPlayer(function (err, player) {
+					if (err) {
+					  return $("#error").text(err.toString());
+					}
+
+					if (player) {
+					  $("#tts_player").text(player.toString());
+					} else {
+					  $("#tts_player").text('None available');
+					}
+				  });
+				}
+			  });
+			});
+		</script>
+		<!--
+		<script>
+			$(document).ready(function() {
+			var audioElement = document.createElement('audio');
+			audioElement.setAttribute('src', 'media/minions.mp3');
+			audioElement.setAttribute('autoplay', 'autoplay');
+			//audioElement.load()
+			$.get();
+			audioElement.addEventListener("load", function() {
+			audioElement.play();
+			}, true);
+
+
+
+
+			$('.playL').click(function() {
+			audioElement.play();
+			});
+
+
+			$('.pauseL').click(function() {
+			audioElement.pause();
+			});
+
+
+
+		});
+		</script>
+		-->
+		
+</body>
+
+</html>
+

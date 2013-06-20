@@ -1,0 +1,54 @@
+.div-center {
+	margin-left: auto ;
+    margin-right: auto ;
+}
+
+.container {
+    width: 300px ;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+
+/* Player */
+div.jp-audio {
+	width:286px;
+}
+
+
+div.jp-audio div.jp-type-playlist div.jp-interface {
+	height: auto;
+}
+
+div.jp-audio ul.jp-controls {
+    padding: 5px 5px;
+    width: 290px;
+}
+
+
+div.jp-audio div.jp-type-playlist div.jp-progress {
+    left: 149px;
+    width: 130px;
+}
+
+div.jp-audio div.jp-progress {
+    height: 15px;
+    position: absolute;
+    top: 18px;
+}
+
+div.jp-audio div.jp-type-playlist div.jp-time-holder {
+    left: 148px;
+    width: 130px;
+}
+
+div.jp-audio div.jp-time-holder {
+    position: absolute;
+    top: 31px;
+}
+
+
+/* Playlist */
+div.jp-title ul, div.jp-playlist ul {
+	padding: 0px 5px
+}
